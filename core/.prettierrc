@@ -1,0 +1,23 @@
+# Set the print width to 80 columns
+printWidth: 80
+
+# Use 2 spaces for indentation
+tabWidth: 2
+
+# Use spaces instead of tabs
+useTabs: false
+
+# Add a trailing comma at the end of multiline object literals
+trailingComma: "all"
+
+# Use single quotes instead of double quotes
+singleQuote: true
+
+# Use semicolons at the end of statements
+semi: false
+
+# Place the > of a multi-line JSX element at the end of the last line
+jsxBracketSameLine: false
+
+# Use the default Prettier parser for TypeScript
+parser: "typescript"
