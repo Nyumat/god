@@ -1,12 +1,17 @@
-import dotenv from "dotenv"
-import path from "path"
-import ExpressConfig from "./Express/express.config"
-
-const CONFIG_PATH = path.resolve(__dirname, '../config', '.env.local')
-
-dotenv.config({ path: CONFIG_PATH })
+import initializeContainerPools from "Docker/pool.ts";
+import logger from "Logger/index.ts";
+import { PORT } from "constants.ts";
+import ExpressConfig from "./Express/express.config.ts";
 
 const app = ExpressConfig()
-const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => console.log("Server Running on Port " + PORT))
+app.listen(PORT, async () => {
+    await initializeContainerPools().catch((err) => {
+        console.error('❌ Error initializing container pools:', err);
+        process.exit(1);
+    }).then(() => {
+        logger.success("\n 🚀 Successfully initialized container pools. \n")
+    }).finally(() => {
+        logger.info(`\n 🔋 Server started on port ${PORT} \n`)
+    })
+})
