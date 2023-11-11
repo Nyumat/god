@@ -1,2 +1,4 @@
 core/node_modules
 core/config
+.vscode
+core/tmp
