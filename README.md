@@ -2,10 +2,19 @@
 
 God is a web service that allows you to execute code in a variety of languages. I've [already done this in Golang as a proof of concept](https://github.com/nyumat/titan) but I wanted to try it in TypeScript for funsies. 🤩 
 
-It works by creating a series of Docker containers that are spun up when the server starts, and torn down when the server connection closes. The containers and sanbox are created using [Dockerode](https://github.com/apocas/dockerode). 
+It works by creating a series of Docker containers that are spun up when the server starts, and torn down when the server connection closes. Aditionally, you're able to execute code in a variety of languages, and the output is returned to you. See the API section for more details.
+
+The containers and sanbox are created using [Dockerode](https://github.com/apocas/dockerode). 
 
 [PocketBase](
 https://pocketbase.io/) (a database as a service) is used for storing the metadata.
+
+## Getting Started
+
+Language Support:
+- ✅ Go
+- ✅ Node.js
+- ✅ Python
 
 You'll need:
 
@@ -13,7 +22,6 @@ You'll need:
 - [Docker](https://www.docker.com/)
 - [PocketBase](https://pocketbase.io/)
 
-## Getting Started
 
 1. Clone this repository
 
@@ -43,7 +51,7 @@ npm run dev
 
 **Note:** You can see the linting and formating scripts in `package.json` under `lint` and `format`
 
-## API (WIP)
+## API 
 
 ### POST /api/v1/execute
 
