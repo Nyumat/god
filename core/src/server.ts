@@ -1,4 +1,4 @@
-import initializeContainerPools from "Docker/pool.ts";
+import { initializeContainerPools } from "Docker/pool.ts";
 import logger from "Logger/index.ts";
 import { PORT } from "constants.ts";
 import ExpressConfig from "./Express/express.config.ts";
