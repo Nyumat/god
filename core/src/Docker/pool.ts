@@ -57,7 +57,7 @@ async function initializeContainerPools() {
 
 async function createInitializedContainer(language: string) {
     const container = await docker.createContainer({
-        Image: language,
+        Image: language === 'golang' ? 'golang:1.19' : `${language}:latest`,
         AttachStdin: true,
         AttachStdout: true,
         AttachStderr: true,
@@ -68,12 +68,51 @@ async function createInitializedContainer(language: string) {
         HostConfig: {
             AutoRemove: true,
             Binds: [
-                `${process.cwd()}/tmp:/tmp`,
+                `${process.cwd()}/src/tmp:/tmp`,
+                ...(language === 'golang' ? [`${process.cwd()}/src/tmp:/go/src/app`] : [])
             ],
         },
     });
 
     await container.start();
+
+    container.exec({
+        Cmd: ['mkdir', '-p', '/tmp'],
+        AttachStdout: true,
+        AttachStderr: true,
+    }, (err, exec) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        exec?.start({ Detach: false, Tty: false }, (err, stream) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            container.exec({
+                Cmd: ['chmod', '-R', '777', '/tmp'],
+                AttachStdout: true,
+                AttachStderr: true,
+            }, (err, exec) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                exec?.start({ Detach: false, Tty: false }, (err, stream) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                });
+            });
+        })
+
+
+    });
 
     const data = {
         language,
@@ -171,4 +210,4 @@ const getContainers = async () => {
     return filteredRecords;
 }
 
-export default initializeContainerPools;    
+export { initializeContainerPools, getContainers };

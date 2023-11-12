@@ -14,3 +14,8 @@ export const POCKETBASE_URL = process.env.POCKETBASE_URL;
 export const USERNAME = process.env.USERNAME as string;
 export const PASSWORD = process.env.PASSWORD as string;
 export const PORT = process.env.PORT || 3000;
+
+export const PYTHON_FILE_PATH = '/tmp/submission.py';
+export const NODE_FILE_PATH = '/tmp/submission.js';
+export const GOLANG_FILE_PATH = '/go/src/app/main.go';
+
